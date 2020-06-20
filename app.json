@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "Community",
+    "slug": "community",
+    "privacy": "public",
+    "sdkVersion": "32.0.0",
+    "platforms": ["ios", "android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/images/icon-big.png",
+    "splash": {
+      "image": "./src/assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#f3f3f3"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "fhs.mmp3.community",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.965049474393-ieid6fnvep7ufpt10kbtgd64ul4v115m"
+        }
+      }
+    },
+    "android": {
+      "package": "fhs.mmp3.community",
+      "googleServicesFile": "./google-services.json"
+    },
+    "facebookScheme": "fb803316656676152",
+    "facebookAppId": "803316656676152",
+    "facebookDisplayName": "Community App"
+  }
+}

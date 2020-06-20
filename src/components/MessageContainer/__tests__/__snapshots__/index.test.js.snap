@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MessageContainer /> renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "flex-start",
+      "backgroundColor": "#fff",
+      "elevation": 3,
+      "flexDirection": "column",
+      "height": "auto",
+      "marginEnd": 15,
+      "marginStart": 15,
+      "marginTop": 10,
+      "shadowColor": "#cccccc",
+      "width": "90%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flexDirection": "column",
+        "margin": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "alignItems": "center",
+          "color": "#3B3D3B",
+          "fontSize": 20,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Title
+       
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#3B3D3B",
+          "fontSize": 16,
+          "paddingTop": 10,
+        }
+      }
+    >
+      Description
+       
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "borderBottomColor": "#dedec2",
+        "borderBottomWidth": 1,
+        "margin": 5,
+        "width": "95%",
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "margin": 10,
+        "width": "95%",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
+        }
+      }
+    >
+      <Image />
+      <Text
+        style={
+          Object {
+            "color": "#3B3D3B",
+            "fontSize": 16,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        User 1
+         
+      </Text>
+    </View>
+    <Text
+      style={
+        Object {
+          "alignSelf": "flex-end",
+          "color": "#dedec2",
+          "fontSize": 16,
+        }
+      }
+    >
+      12.03.14
+       
+    </Text>
+  </View>
+</View>
+`;

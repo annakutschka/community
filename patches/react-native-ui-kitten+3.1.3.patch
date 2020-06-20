@@ -1,0 +1,1121 @@
+diff --git a/node_modules/react-native-ui-kitten/.DS_Store b/node_modules/react-native-ui-kitten/.DS_Store
+new file mode 100644
+index 0000000..6730c73
+Binary files /dev/null and b/node_modules/react-native-ui-kitten/.DS_Store differ
+diff --git a/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarDay.component.js b/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarDay.component.js
+index d11184b..9882ba9 100644
+--- a/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarDay.component.js
++++ b/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarDay.component.js
+@@ -1,9 +1,5 @@
+ import React from 'react';
+-import {
+-  View,
+-  Text,
+-  TouchableWithoutFeedback,
+-} from 'react-native';
++import { View, Text, TouchableWithoutFeedback } from 'react-native';
+ import PropTypes from 'prop-types';
+ import * as RkCalendarService from '../services';
+ 
+@@ -25,7 +21,7 @@ export class RkCalendarDay extends React.Component {
+     // eslint-disable-next-line react/no-unused-prop-types
+     selected: PropTypes.shape({
+       start: PropTypes.instanceOf(Date),
+-      end: PropTypes.instanceOf(Date),
++      end: PropTypes.instanceOf(Date)
+     }),
+     renderContent: PropTypes.func,
+     // used in selection-strategy
+@@ -42,35 +38,35 @@ export class RkCalendarDay extends React.Component {
+       shouldUpdateDay: PropTypes.func.isRequired,
+       shouldUpdateWeek: PropTypes.func.isRequired,
+       shouldUpdateMonth: PropTypes.func.isRequired,
+-      shouldUpdateYear: PropTypes.func.isRequired,
++      shouldUpdateYear: PropTypes.func.isRequired
+     }).isRequired,
+ 
+     size: PropTypes.number.isRequired,
+ 
+     style: PropTypes.shape({
+       container: PropTypes.shape({
+-        base: View.propTypes.style,
+-        today: View.propTypes.style,
+-        selected: View.propTypes.style,
+-        highlighted: View.propTypes.style,
+-        disabled: View.propTypes.style,
++        base: PropTypes.style,
++        today: PropTypes.style,
++        selected: PropTypes.style,
++        highlighted: PropTypes.style,
++        disabled: PropTypes.style
+       }),
+       text: PropTypes.shape({
+         base: Text.propTypes.style,
+         today: Text.propTypes.style,
+         selected: Text.propTypes.style,
+         highlighted: Text.propTypes.style,
+-        disabled: Text.propTypes.style,
+-      }),
+-    }),
++        disabled: Text.propTypes.style
++      })
++    })
+   };
+ 
+   static defaultProps = {
+     date: RkCalendarService.Month.defaultBoundingFallback,
+     selected: undefined,
+     renderContent: undefined,
+-    filter: (() => true),
+-    onSelect: (() => null),
++    filter: () => true,
++    onSelect: () => null,
+ 
+     style: {
+       container: {
+@@ -78,16 +74,16 @@ export class RkCalendarDay extends React.Component {
+         today: {},
+         selected: {},
+         highlighted: {},
+-        disabled: {},
++        disabled: {}
+       },
+       text: {
+         base: {},
+         today: {},
+         selected: {},
+         highlighted: {},
+-        disabled: {},
+-      },
+-    },
++        disabled: {}
++      }
++    }
+   };
+ 
+   state = {
+@@ -95,7 +91,7 @@ export class RkCalendarDay extends React.Component {
+     isHighlighted: false,
+     isDisabled: false,
+     isToday: false,
+-    isEmpty: false,
++    isEmpty: false
+   };
+ 
+   static getDerivedStateFromProps(props) {
+@@ -104,13 +100,16 @@ export class RkCalendarDay extends React.Component {
+       isHighlighted: props.selectionStrategy.isDayHighlighted(props),
+       isDisabled: props.selectionStrategy.isDayDisabled(props),
+       isToday: props.selectionStrategy.isDayToday(props),
+-      isEmpty: props.selectionStrategy.isDayEmpty(props),
++      isEmpty: props.selectionStrategy.isDayEmpty(props)
+     };
+   }
+ 
+   shouldComponentUpdate(nextProps) {
+     const isSizeChanged = nextProps.size !== this.props.size;
+-    return isSizeChanged || nextProps.selectionStrategy.shouldUpdateDay(this.props, nextProps);
++    return (
++      isSizeChanged ||
++      nextProps.selectionStrategy.shouldUpdateDay(this.props, nextProps)
++    );
+   }
+ 
+   onPress = () => {
+@@ -119,35 +118,43 @@ export class RkCalendarDay extends React.Component {
+ 
+   getContentStyle = (state, style) => ({
+     container: {
+-      base: state.isToday ? [style.container.base, style.container.today] : style.container.base,
++      base: state.isToday
++        ? [style.container.base, style.container.today]
++        : style.container.base,
+       selected: state.isSelected ? style.container.selected : null,
+       highlighted: state.isHighlighted ? style.container.highlighted : null,
+-      disabled: state.isDisabled ? style.container.disabled : null,
++      disabled: state.isDisabled ? style.container.disabled : null
+     },
+     text: {
+-      base: state.isToday ? [style.text.base, style.text.today] : style.text.base,
++      base: state.isToday
++        ? [style.text.base, style.text.today]
++        : style.text.base,
+       selected: state.isSelected ? style.text.selected : null,
+       highlighted: state.isHighlighted ? style.text.highlighted : null,
+-      disabled: state.isDisabled ? style.text.disabled : null,
+-    },
++      disabled: state.isDisabled ? style.text.disabled : null
++    }
+   });
+ 
+   renderText = (date, state) => {
+     const styles = this.getContentStyle(state, this.props.style);
+     return (
+-      <View style={[
+-        styles.container.base,
+-        styles.container.selected,
+-        styles.container.highlighted,
+-        styles.container.disabled,
+-        { flex: 1 },
+-      ]}>
+-        <Text style={[
+-          styles.text.base,
+-          styles.text.selected,
+-          styles.text.highlighted,
+-          styles.text.disabled,
+-        ]}>
++      <View
++        style={[
++          styles.container.base,
++          styles.container.selected,
++          styles.container.highlighted,
++          styles.container.disabled,
++          { flex: 1 }
++        ]}
++      >
++        <Text
++          style={[
++            styles.text.base,
++            styles.text.selected,
++            styles.text.highlighted,
++            styles.text.disabled
++          ]}
++        >
+           {state.isEmpty ? defaultDayValue : date.getDate()}
+         </Text>
+       </View>
+@@ -155,12 +162,14 @@ export class RkCalendarDay extends React.Component {
+   };
+ 
+   render() {
+-    const contentHeight = this.props.renderContent === undefined ? this.props.size : undefined;
++    const contentHeight =
++      this.props.renderContent === undefined ? this.props.size : undefined;
+     const renderContentFunction = this.props.renderContent || this.renderText;
+     return (
+       <TouchableWithoutFeedback
+         disabled={this.state.isDisabled}
+-        onPress={this.onPress}>
++        onPress={this.onPress}
++      >
+         <View style={{ width: this.props.size, height: contentHeight }}>
+           {renderContentFunction(this.props.date, this.state)}
+         </View>
+diff --git a/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarMonth.component.js b/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarMonth.component.js
+index 9b73e13..d72d4dc 100644
+--- a/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarMonth.component.js
++++ b/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarMonth.component.js
+@@ -15,7 +15,7 @@ export class RkCalendarMonth extends React.Component {
+     date: PropTypes.instanceOf(Date).isRequired,
+     selected: PropTypes.shape({
+       start: PropTypes.instanceOf(Date),
+-      end: PropTypes.instanceOf(Date),
++      end: PropTypes.instanceOf(Date)
+     }),
+     boundingMonth: PropTypes.bool,
+     renderDay: PropTypes.func,
+@@ -31,48 +31,56 @@ export class RkCalendarMonth extends React.Component {
+       shouldUpdateDay: PropTypes.func.isRequired,
+       shouldUpdateWeek: PropTypes.func.isRequired,
+       shouldUpdateMonth: PropTypes.func.isRequired,
+-      shouldUpdateYear: PropTypes.func.isRequired,
++      shouldUpdateYear: PropTypes.func.isRequired
+     }).isRequired,
+ 
+     daySize: PropTypes.number.isRequired,
+ 
+     style: PropTypes.shape({
+-      container: View.propTypes.style,
+-      day: RkCalendarDay.propTypes.style,
+-    }),
++      container: PropTypes.style,
++      day: RkCalendarDay.propTypes.style
++    })
+   };
+ 
+   static defaultProps = {
+     selected: undefined,
+     boundingMonth: true,
+     renderDay: undefined,
+-    filter: (() => true),
++    filter: () => true,
+ 
+     style: {
+       container: {},
+-      day: RkCalendarDay.defaultProps.style,
+-    },
++      day: RkCalendarDay.defaultProps.style
++    }
+   };
+ 
+   state = {
+-    dates: [],
++    dates: []
+   };
+ 
+   constructor(props) {
+     super(props);
+     this.state = {
+-      dates: RkCalendarService.Month.createDaysGrid(this.props.date, this.props.boundingMonth),
++      dates: RkCalendarService.Month.createDaysGrid(
++        this.props.date,
++        this.props.boundingMonth
++      )
+     };
+   }
+ 
+   shouldComponentUpdate(nextProps) {
+     const isSizeChanged = nextProps.daySize !== this.props.daySize;
+-    return isSizeChanged || nextProps.selectionStrategy.shouldUpdateMonth(this.props, nextProps);
++    return (
++      isSizeChanged ||
++      nextProps.selectionStrategy.shouldUpdateMonth(this.props, nextProps)
++    );
+   }
+ 
+   // eslint-disable-next-line arrow-body-style
+-  getChildComponents = (styles) => {
+-    return this.state.dates.map((item, index) => this.renderWeek(item, index, styles));
++  getChildComponents = styles => {
++    return this.state.dates.map((item, index) =>
++      this.renderWeek(item, index, styles)
++    );
+   };
+ 
+   renderWeek = (item, index, styles) => (
+@@ -94,10 +102,6 @@ export class RkCalendarMonth extends React.Component {
+ 
+   render() {
+     const { container, ...restStyles } = this.props.style;
+-    return (
+-      <View style={container}>
+-        {this.getChildComponents(restStyles)}
+-      </View>
+-    );
++    return <View style={container}>{this.getChildComponents(restStyles)}</View>;
+   }
+ }
+diff --git a/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarWeek.component.js b/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarWeek.component.js
+index 5724425..0eefb18 100644
+--- a/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarWeek.component.js
++++ b/node_modules/react-native-ui-kitten/src/components/calendar/cells/rkCalendarWeek.component.js
+@@ -11,7 +11,7 @@ export class RkCalendarWeek extends React.Component {
+     dates: PropTypes.arrayOf(PropTypes.instanceOf(Date)).isRequired,
+     selected: PropTypes.shape({
+       start: PropTypes.instanceOf(Date),
+-      end: PropTypes.instanceOf(Date),
++      end: PropTypes.instanceOf(Date)
+     }),
+     renderDay: PropTypes.func,
+     filter: PropTypes.func,
+@@ -26,31 +26,34 @@ export class RkCalendarWeek extends React.Component {
+       shouldUpdateDay: PropTypes.func.isRequired,
+       shouldUpdateWeek: PropTypes.func.isRequired,
+       shouldUpdateMonth: PropTypes.func.isRequired,
+-      shouldUpdateYear: PropTypes.func.isRequired,
++      shouldUpdateYear: PropTypes.func.isRequired
+     }).isRequired,
+ 
+     daySize: PropTypes.number.isRequired,
+ 
+     style: PropTypes.shape({
+-      container: View.propTypes.style,
+-      day: RkCalendarDay.propTypes.style,
+-    }),
++      container: PropTypes.style,
++      day: RkCalendarDay.propTypes.style
++    })
+   };
+ 
+   static defaultProps = {
+     selected: undefined,
+     renderDay: undefined,
+-    filter: (() => true),
++    filter: () => true,
+ 
+     style: {
+       container: {},
+-      day: RkCalendarDay.defaultProps.style,
+-    },
++      day: RkCalendarDay.defaultProps.style
++    }
+   };
+ 
+   shouldComponentUpdate(nextProps) {
+     const isSizeChanged = nextProps.daySize !== this.props.daySize;
+-    return isSizeChanged || nextProps.selectionStrategy.shouldUpdateWeek(this.props, nextProps);
++    return (
++      isSizeChanged ||
++      nextProps.selectionStrategy.shouldUpdateWeek(this.props, nextProps)
++    );
+   }
+ 
+   getChildComponents = () => this.props.dates.map(this.renderDay);
+@@ -80,4 +83,3 @@ export class RkCalendarWeek extends React.Component {
+     );
+   }
+ }
+-
+diff --git a/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarDaysNames.component.js b/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarDaysNames.component.js
+index 3a209d6..7fe1eff 100644
+--- a/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarDaysNames.component.js
++++ b/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarDaysNames.component.js
+@@ -1,10 +1,6 @@
+ import React from 'react';
+ import PropTypes from 'prop-types';
+-import {
+-  View,
+-  Text,
+-  StyleSheet,
+-} from 'react-native';
++import { View, Text, StyleSheet } from 'react-native';
+ import * as RkCalendarService from '../services';
+ 
+ export class RkCalendarDaysNames extends React.Component {
+@@ -15,29 +11,32 @@ export class RkCalendarDaysNames extends React.Component {
+      */
+     daySize: PropTypes.number.isRequired,
+     style: PropTypes.shape({
+-      container: View.propTypes.style,
+-      text: Text.propTypes.style,
+-    }),
++      container: PropTypes.style,
++      text: Text.propTypes.style
++    })
+   };
+ 
+   static defaultProps = {
+     style: {
+       container: {},
+-      text: {},
+-    },
++      text: {}
++    }
+   };
+ 
+   dayOfWeekNames = RkCalendarService.Locale.getDayOfWeekNames();
+ 
+   // eslint-disable-next-line arrow-body-style
+-  getChildComponents = (style) => {
+-    return this.dayOfWeekNames.map((item, index) => this.renderDayOfWeek(item, index, style));
++  getChildComponents = style => {
++    return this.dayOfWeekNames.map((item, index) =>
++      this.renderDayOfWeek(item, index, style)
++    );
+   };
+ 
+   renderDayOfWeek = (item, index, style) => (
+     <Text
+       key={`${index}`}
+-      style={[styles.text, style, { width: this.props.daySize }]}>
++      style={[styles.text, style, { width: this.props.daySize }]}
++    >
+       {item.toUpperCase()}
+     </Text>
+   );
+@@ -53,10 +52,9 @@ export class RkCalendarDaysNames extends React.Component {
+ 
+ const styles = StyleSheet.create({
+   container: {
+-    flexDirection: 'row',
++    flexDirection: 'row'
+   },
+   text: {
+-    flex: 1,
+-  },
++    flex: 1
++  }
+ });
+-
+diff --git a/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarMonthHeader.component.js b/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarMonthHeader.component.js
+index a6cf426..141b34a 100644
+--- a/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarMonthHeader.component.js
++++ b/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarMonthHeader.component.js
+@@ -16,18 +16,18 @@ export class RkCalendarMonthHeader extends React.Component {
+      */
+     daySize: PropTypes.number.isRequired,
+     style: PropTypes.shape({
+-      container: View.propTypes.style,
++      container: PropTypes.style,
+       monthName: RkCalendarMonthName.propTypes.style,
+-      weekDays: RkCalendarDaysNames.propTypes.style,
+-    }),
++      weekDays: RkCalendarDaysNames.propTypes.style
++    })
+   };
+ 
+   static defaultProps = {
+     style: {
+       container: {},
+       monthName: RkCalendarMonthName.defaultProps.style,
+-      weekDays: RkCalendarDaysNames.defaultProps.style,
+-    },
++      weekDays: RkCalendarDaysNames.defaultProps.style
++    }
+   };
+ 
+   render() {
+diff --git a/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarView.component.js b/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarView.component.js
+index 78bfdaa..f1a753c 100644
+--- a/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarView.component.js
++++ b/node_modules/react-native-ui-kitten/src/components/calendar/common/rkCalendarView.component.js
+@@ -1,8 +1,5 @@
+ import React from 'react';
+-import {
+-  View,
+-  FlatList,
+-} from 'react-native';
++import { View, FlatList } from 'react-native';
+ import PropTypes from 'prop-types';
+ import { RkCalendarMonth } from '../cells/rkCalendarMonth.component';
+ import { RkCalendarMonthHeader } from '../common/rkCalendarMonthHeader.component';
+@@ -13,7 +10,7 @@ export class RkCalendarView extends React.Component {
+     layout: PropTypes.shape({
+       getLayoutConfig: PropTypes.func.isRequired,
+       getItemSize: PropTypes.func.isRequired,
+-      getPrimaryAxisOffset: PropTypes.func.isRequired,
++      getPrimaryAxisOffset: PropTypes.func.isRequired
+     }).isRequired,
+     selectionStrategy: PropTypes.shape({
+       isDaySelected: PropTypes.func.isRequired,
+@@ -23,7 +20,7 @@ export class RkCalendarView extends React.Component {
+       shouldUpdateDay: PropTypes.func.isRequired,
+       shouldUpdateWeek: PropTypes.func.isRequired,
+       shouldUpdateMonth: PropTypes.func.isRequired,
+-      shouldUpdateYear: PropTypes.func.isRequired,
++      shouldUpdateYear: PropTypes.func.isRequired
+     }).isRequired,
+     min: PropTypes.instanceOf(Date).isRequired,
+     max: PropTypes.instanceOf(Date).isRequired,
+@@ -36,8 +33,8 @@ export class RkCalendarView extends React.Component {
+       PropTypes.instanceOf(Date),
+       PropTypes.shape({
+         start: PropTypes.instanceOf(Date),
+-        end: PropTypes.instanceOf(Date),
+-      }),
++        end: PropTypes.instanceOf(Date)
++      })
+     ]).isRequired,
+     boundingMonth: PropTypes.bool,
+     renderDay: PropTypes.func,
+@@ -68,30 +65,30 @@ export class RkCalendarView extends React.Component {
+     onVisibleMonthChanged: PropTypes.func,
+ 
+     style: PropTypes.shape({
+-      container: View.propTypes.style,
++      container: PropTypes.style,
+       header: RkCalendarMonthHeader.propTypes.style,
+-      month: RkCalendarMonth.propTypes.style,
+-    }),
++      month: RkCalendarMonth.propTypes.style
++    })
+   };
+ 
+   static defaultProps = {
+     boundingMonth: true,
+     renderDay: undefined,
+-    filter: (() => true),
+-    onLayoutCompleted: (() => null),
+-    onVisibleMonthChanged: (() => null),
++    filter: () => true,
++    onLayoutCompleted: () => null,
++    onVisibleMonthChanged: () => null,
+ 
+     style: {
+       container: {},
+       header: RkCalendarMonthHeader.defaultProps.style,
+-      month: RkCalendarMonth.defaultProps.style,
+-    },
++      month: RkCalendarMonth.defaultProps.style
++    }
+   };
+ 
+   state = {
+     items: [],
+     daySize: -1,
+-    visibleMonth: RkCalendarService.Date.today(),
++    visibleMonth: RkCalendarService.Date.today()
+   };
+ 
+   listRef = undefined;
+@@ -100,9 +97,10 @@ export class RkCalendarView extends React.Component {
+ 
+   static getDerivedStateFromProps(props) {
+     const itemCount = RkCalendarService.Date.getMonthDiff(props.min, props.max);
+-    const createMonthDateByIndex = (index) => new Date(props.min.getFullYear(), index, 1);
++    const createMonthDateByIndex = index =>
++      new Date(props.min.getFullYear(), index, 1);
+     return {
+-      items: RkCalendarService.Util.range(itemCount, createMonthDateByIndex),
++      items: RkCalendarService.Util.range(itemCount, createMonthDateByIndex)
+     };
+   }
+ 
+@@ -113,7 +111,7 @@ export class RkCalendarView extends React.Component {
+     const { index, ...restParams } = params;
+     this.listRef.scrollToOffset({
+       offset: this.calculateItemOffset({ index }),
+-      ...restParams,
++      ...restParams
+     });
+     this.setVisibleMonthIfNeeded(this.createMonthDateByIndex(index));
+   }
+@@ -126,12 +124,16 @@ export class RkCalendarView extends React.Component {
+    * }
+    */
+   scrollToDate(date, params) {
+-    const itemPosition = RkCalendarService.Date.getMonthDiff(this.props.min, date) - 1;
++    const itemPosition =
++      RkCalendarService.Date.getMonthDiff(this.props.min, date) - 1;
+     this.scrollToIndex({ index: itemPosition, ...params });
+   }
+ 
+-  onLayout = (event) => {
+-    const state = { daySize: event.nativeEvent.layout.width / RkCalendarService.Date.DAYS_IN_WEEK };
++  onLayout = event => {
++    const state = {
++      daySize:
++        event.nativeEvent.layout.width / RkCalendarService.Date.DAYS_IN_WEEK
++    };
+     this.setState(state, this.onLayoutCompleted);
+   };
+ 
+@@ -143,16 +145,24 @@ export class RkCalendarView extends React.Component {
+     this.props.onLayoutCompleted();
+   };
+ 
+-  onScrollEndDrag = (event) => {
+-    const axisOffset = this.props.layout.getPrimaryAxisOffset(event.nativeEvent.contentOffset);
++  onScrollEndDrag = event => {
++    const axisOffset = this.props.layout.getPrimaryAxisOffset(
++      event.nativeEvent.contentOffset
++    );
+     const visibleMonthIndex = this.calculateItemIndex(axisOffset);
+-    this.setVisibleMonthIfNeeded(this.createMonthDateByIndex(visibleMonthIndex));
++    this.setVisibleMonthIfNeeded(
++      this.createMonthDateByIndex(visibleMonthIndex)
++    );
+   };
+ 
+-  onScrollEndFling = (event) => {
+-    const axisOffset = this.props.layout.getPrimaryAxisOffset(event.nativeEvent.contentOffset);
++  onScrollEndFling = event => {
++    const axisOffset = this.props.layout.getPrimaryAxisOffset(
++      event.nativeEvent.contentOffset
++    );
+     const visibleMonthIndex = this.calculateItemIndex(axisOffset);
+-    this.setVisibleMonthIfNeeded(this.createMonthDateByIndex(visibleMonthIndex));
++    this.setVisibleMonthIfNeeded(
++      this.createMonthDateByIndex(visibleMonthIndex)
++    );
+   };
+ 
+   getItemLayout = (data, index) => {
+@@ -161,7 +171,7 @@ export class RkCalendarView extends React.Component {
+     return {
+       length: itemSize,
+       offset: itemSize + this.calculateItemOffset({ index: itemPosition }),
+-      index: itemPosition,
++      index: itemPosition
+     };
+   };
+ 
+@@ -172,11 +182,11 @@ export class RkCalendarView extends React.Component {
+     return this.calculateItemOffset({
+       currentValue: currentValue + this.getItemSize(currentIndex),
+       currentIndex: currentIndex + 1,
+-      index,
++      index
+     });
+   };
+ 
+-  calculateItemIndex = (offset) => {
++  calculateItemIndex = offset => {
+     let calculatedOffset = 0;
+     for (let i = 0; i < this.itemSizes.size; i += 1) {
+       const itemSize = this.itemSizes.get(i);
+@@ -191,18 +201,22 @@ export class RkCalendarView extends React.Component {
+   /**
+    * returns item size if was calculated earlier or calculates it.
+    */
+-  getItemSize = (index) => {
++  getItemSize = index => {
+     const cachedItemSize = this.itemSizes.get(index);
+     const calculateItemSize = () => {
+-      const item = new Date(this.props.min.getFullYear(), this.props.min.getMonth() + index, 0);
++      const item = new Date(
++        this.props.min.getFullYear(),
++        this.props.min.getMonth() + index,
++        0
++      );
+       return this.props.layout.getItemSize(item, index, this.state.daySize);
+     };
+     return cachedItemSize || calculateItemSize();
+   };
+ 
+-  getItemKey = (index) => index.toString();
++  getItemKey = index => index.toString();
+ 
+-  setListRef = (ref) => {
++  setListRef = ref => {
+     this.listRef = ref;
+   };
+ 
+@@ -213,7 +227,8 @@ export class RkCalendarView extends React.Component {
+     }
+   }
+ 
+-  createMonthDateByIndex = (index) => new Date(this.props.min.getFullYear(), index, 1);
++  createMonthDateByIndex = index =>
++    new Date(this.props.min.getFullYear(), index, 1);
+ 
+   renderItem = ({ item, index }) => (
+     <View key={index.toString()}>
+@@ -238,9 +253,7 @@ export class RkCalendarView extends React.Component {
+     </View>
+   );
+ 
+-  renderPlaceholder = () => (
+-    <View onLayout={this.onLayout} />
+-  );
++  renderPlaceholder = () => <View onLayout={this.onLayout} />;
+ 
+   renderView = () => (
+     <FlatList
+@@ -258,6 +271,8 @@ export class RkCalendarView extends React.Component {
+   );
+ 
+   render() {
+-    return this.state.daySize < 0 ? this.renderPlaceholder() : this.renderView();
++    return this.state.daySize < 0
++      ? this.renderPlaceholder()
++      : this.renderView();
+   }
+ }
+diff --git a/node_modules/react-native-ui-kitten/src/components/tabset/rkTab.component.js b/node_modules/react-native-ui-kitten/src/components/tabset/rkTab.component.js
+index 0ee1b27..0f8900f 100644
+--- a/node_modules/react-native-ui-kitten/src/components/tabset/rkTab.component.js
++++ b/node_modules/react-native-ui-kitten/src/components/tabset/rkTab.component.js
+@@ -1,10 +1,6 @@
+ import React from 'react';
+ import PropTypes from 'prop-types';
+-import {
+-  View,
+-  Text,
+-  Image,
+-} from 'react-native';
++import { View, Text, Image } from 'react-native';
+ import { RkBadge } from '../badge/rkBadge.component';
+ 
+ /**
+@@ -34,18 +30,18 @@ export class RkTab extends React.Component {
+ 
+     style: PropTypes.shape({
+       container: PropTypes.shape({
+-        base: View.propTypes.style,
+-        selected: View.propTypes.style,
++        base: PropTypes.style,
++        selected: PropTypes.style
+       }),
+       title: PropTypes.shape({
+         base: Text.propTypes.style,
+-        selected: Text.propTypes.style,
++        selected: Text.propTypes.style
+       }),
+       icon: PropTypes.shape({
+         base: Image.propTypes.style,
+-        selected: Image.propTypes.style,
+-      }),
+-    }),
++        selected: Image.propTypes.style
++      })
++    })
+   };
+   static defaultProps = {
+     title: '',
+@@ -59,26 +55,26 @@ export class RkTab extends React.Component {
+     style: {
+       container: {
+         base: {},
+-        selected: {},
++        selected: {}
+       },
+       title: {
+         base: {},
+-        selected: {},
++        selected: {}
+       },
+       icon: {
+         base: {},
+-        selected: {},
+-      },
+-    },
++        selected: {}
++      }
++    }
+   };
+ 
+   state = {
+-    isSelected: RkTab.defaultProps.isSelected,
++    isSelected: RkTab.defaultProps.isSelected
+   };
+ 
+   static getDerivedStateFromProps(props) {
+     return {
+-      isSelected: props.isSelected,
++      isSelected: props.isSelected
+     };
+   }
+ 
+@@ -89,20 +85,20 @@ export class RkTab extends React.Component {
+   getContentStyle = (state, style) => ({
+     container: {
+       base: style.container.base,
+-      selected: state.isSelected ? style.container.selected : null,
++      selected: state.isSelected ? style.container.selected : null
+     },
+     title: {
+       base: style.title.base,
+-      selected: state.isSelected ? style.title.selected : null,
++      selected: state.isSelected ? style.title.selected : null
+     },
+     icon: {
+       base: style.icon.base,
+-      selected: this.state.isSelected ? style.icon.selected : null,
++      selected: this.state.isSelected ? style.icon.selected : null
+     },
+     badge: {
+       base: { opacity: this.props.badgeTitle.length > 0 ? 1 : 0 },
+-      selected: {},
+-    },
++      selected: {}
++    }
+   });
+ 
+   render() {
+@@ -119,8 +115,7 @@ export class RkTab extends React.Component {
+           style={[styles.icon.base, styles.icon.selected]}
+           source={this.props.icon}
+         />
+-        <Text
+-          style={[styles.title.base, styles.title.selected]}>
++        <Text style={[styles.title.base, styles.title.selected]}>
+           {this.props.title}
+         </Text>
+       </View>
+diff --git a/node_modules/react-native-ui-kitten/src/components/tabset/rkTabBar.component.js b/node_modules/react-native-ui-kitten/src/components/tabset/rkTabBar.component.js
+index 7cb3b2f..09912eb 100644
+--- a/node_modules/react-native-ui-kitten/src/components/tabset/rkTabBar.component.js
++++ b/node_modules/react-native-ui-kitten/src/components/tabset/rkTabBar.component.js
+@@ -1,10 +1,6 @@
+ import React from 'react';
+ import PropTypes from 'prop-types';
+-import {
+-  View,
+-  ScrollView,
+-  TouchableOpacity,
+-} from 'react-native';
++import { View, ScrollView, TouchableOpacity } from 'react-native';
+ import { RkTab } from './rkTab.component';
+ 
+ /**
+@@ -30,35 +26,37 @@ export class RkTabBar extends React.Component {
+ 
+     style: PropTypes.shape({
+       container: PropTypes.shape({
+-        base: ScrollView.propTypes.contentContainerStyle,
+-        scrollable: ScrollView.propTypes.contentContainerStyle,
++        base: PropTypes.contentContainerStyle,
++        scrollable: PropTypes.contentContainerStyle
+       }),
+-      tab: RkTab.propTypes.style,
+-    }),
++      tab: RkTab.propTypes.style
++    })
+   };
+   static defaultProps = {
+     selectedIndex: 0,
+     isScrollable: false,
+-    onSelect: (() => null),
++    onSelect: () => null,
+ 
+     style: {
+       container: {
+         base: {},
+-        scrollable: {},
++        scrollable: {}
+       },
+-      tab: RkTab.defaultProps.style,
+-    },
++      tab: RkTab.defaultProps.style
++    }
+   };
+ 
+   containerRef = undefined;
+ 
+   shouldComponentUpdate(nextProps) {
+-    const isWidthChanged = this.props.componentWidth !== nextProps.componentWidth;
+-    const isSelectionChanged = this.props.selectedIndex !== nextProps.selectedIndex;
++    const isWidthChanged =
++      this.props.componentWidth !== nextProps.componentWidth;
++    const isSelectionChanged =
++      this.props.selectedIndex !== nextProps.selectedIndex;
+     return isWidthChanged || isSelectionChanged;
+   }
+ 
+-  onItemPress = (index) => {
++  onItemPress = index => {
+     this.props.onSelect(index);
+   };
+ 
+@@ -68,7 +66,8 @@ export class RkTabBar extends React.Component {
+    * @param params - object: { index: number, animated: boolean }
+    */
+   scrollToIndex(params) {
+-    const offset = (this.props.componentWidth / this.props.children.length) * params.index;
++    const offset =
++      (this.props.componentWidth / this.props.children.length) * params.index;
+     this.scrollToOffset({ offset });
+   }
+ 
+@@ -90,13 +89,15 @@ export class RkTabBar extends React.Component {
+     this.containerRef.scrollToEnd(params);
+   }
+ 
+-  setContainerRef = (ref) => {
++  setContainerRef = ref => {
+     this.containerRef = ref;
+   };
+ 
+   getContentStyle = (state, style) => ({
+-    container: this.props.isScrollable ? style.container.scrollable : style.container.base,
+-    tab: this.props.style.tab,
++    container: this.props.isScrollable
++      ? style.container.scrollable
++      : style.container.base,
++    tab: this.props.style.tab
+   });
+ 
+   renderItem = (item, index, style) => (
+@@ -104,15 +105,16 @@ export class RkTabBar extends React.Component {
+       style={{ width: this.props.componentWidth / this.props.children.length }}
+       key={index.toString()}
+       activeOpacity={0.5}
+-      onPress={() => this.onItemPress(index)}>
++      onPress={() => this.onItemPress(index)}
++    >
+       {React.cloneElement(item, {
+         isSelected: this.props.selectedIndex === index,
+-        style,
++        style
+       })}
+     </TouchableOpacity>
+   );
+ 
+-  renderChildComponents = (style) => {
++  renderChildComponents = style => {
+     const mapChild = (item, index) => this.renderItem(item, index, style);
+     return this.props.children.map(mapChild);
+   };
+@@ -127,7 +129,8 @@ export class RkTabBar extends React.Component {
+           horizontal={true}
+           bounces={false}
+           scrollEnabled={this.props.isScrollable}
+-          showsHorizontalScrollIndicator={false}>
++          showsHorizontalScrollIndicator={false}
++        >
+           {this.renderChildComponents(styles.tab)}
+         </ScrollView>
+       </View>
+diff --git a/node_modules/react-native-ui-kitten/src/components/tabset/rkTabBarIndicator.component.js b/node_modules/react-native-ui-kitten/src/components/tabset/rkTabBarIndicator.component.js
+index 3ae226b..35f0ea5 100644
+--- a/node_modules/react-native-ui-kitten/src/components/tabset/rkTabBarIndicator.component.js
++++ b/node_modules/react-native-ui-kitten/src/components/tabset/rkTabBarIndicator.component.js
+@@ -1,9 +1,6 @@
+ import React from 'react';
+ import PropTypes from 'prop-types';
+-import {
+-  View,
+-  Animated,
+-} from 'react-native';
++import { View, Animated } from 'react-native';
+ 
+ const defaultAnimationDuration = 200;
+ 
+@@ -22,15 +19,15 @@ export class RkTabBarIndicator extends React.Component {
+     componentWidth: PropTypes.number.isRequired,
+ 
+     style: PropTypes.shape({
+-      container: View.propTypes.style,
+-      content: View.propTypes.style,
+-    }),
++      container: PropTypes.style,
++      content: PropTypes.style
++    })
+   };
+   static defaultProps = {
+     style: {
+       container: {},
+-      content: {},
+-    },
++      content: {}
++    }
+   };
+ 
+   contentOffset = new Animated.Value(0);
+@@ -43,7 +40,7 @@ export class RkTabBarIndicator extends React.Component {
+   scrollToIndex(params) {
+     this.scrollToOffset({
+       offset: (this.props.componentWidth / this.props.itemCount) * params.index,
+-      ...params,
++      ...params
+     });
+   }
+ 
+@@ -55,7 +52,7 @@ export class RkTabBarIndicator extends React.Component {
+   scrollByOffset(params) {
+     this.scrollToOffset({
+       offset: this.contentOffset + params.offset,
+-      ...params,
++      ...params
+     });
+   }
+ 
+@@ -77,26 +74,27 @@ export class RkTabBarIndicator extends React.Component {
+    *    animated: boolean
+    *    }
+    */
+-  getContentOffsetAnimation = (params) => {
++  getContentOffsetAnimation = params => {
+     const isAnimated = params.animated === undefined ? true : params.animated;
+     const animationDuration = isAnimated ? defaultAnimationDuration : 0;
+     return Animated.timing(this.contentOffset, {
+       toValue: params.offset,
+-      duration: animationDuration,
++      duration: animationDuration
+     });
+   };
+ 
+   render() {
+     const transform = {
+-      transform: [{ translateX: this.contentOffset }],
++      transform: [{ translateX: this.contentOffset }]
+     };
+     return (
+       <View style={this.props.style.container}>
+-        <Animated.View style={[
+-          this.props.style.content,
+-          { width: this.props.componentWidth / this.props.itemCount },
+-          transform,
+-        ]}
++        <Animated.View
++          style={[
++            this.props.style.content,
++            { width: this.props.componentWidth / this.props.itemCount },
++            transform
++          ]}
+         />
+       </View>
+     );
+diff --git a/node_modules/react-native-ui-kitten/src/components/tabset/rkTabPager.component.js b/node_modules/react-native-ui-kitten/src/components/tabset/rkTabPager.component.js
+index 24b7b60..54e0000 100644
+--- a/node_modules/react-native-ui-kitten/src/components/tabset/rkTabPager.component.js
++++ b/node_modules/react-native-ui-kitten/src/components/tabset/rkTabPager.component.js
+@@ -1,9 +1,6 @@
+ import React from 'react';
+ import PropTypes from 'prop-types';
+-import {
+-  View,
+-  FlatList,
+-} from 'react-native';
++import { View, FlatList } from 'react-native';
+ 
+ /**
+  * `RkTabPager` is a component that manages `RkTab`s content views.
+@@ -27,21 +24,21 @@ export class RkTabPager extends React.Component {
+     componentWidth: PropTypes.number.isRequired,
+ 
+     style: PropTypes.shape({
+-      container: View.propTypes.style,
+-    }),
++      container: PropTypes.style
++    })
+   };
+   static defaultProps = {
+     selectedIndex: 0,
+-    onSelect: (() => null),
+-    shouldUseLazyLoad: (() => true),
++    onSelect: () => null,
++    shouldUseLazyLoad: () => true,
+ 
+     style: {
+-      container: {},
+-    },
++      container: {}
++    }
+   };
+ 
+   state = {
+-    items: [],
++    items: []
+   };
+ 
+   /*
+@@ -59,7 +56,7 @@ export class RkTabPager extends React.Component {
+ 
+   static getDerivedStateFromProps(props) {
+     return {
+-      items: props.children,
++      items: props.children
+     };
+   }
+ 
+@@ -67,20 +64,25 @@ export class RkTabPager extends React.Component {
+     super(props);
+     props.children.forEach((item, index) => {
+       const isDerivedSelection = props.selectedIndex === index;
+-      const shouldUseLazyLoad = isDerivedSelection ? false : props.shouldUseLazyLoad(index);
++      const shouldUseLazyLoad = isDerivedSelection
++        ? false
++        : props.shouldUseLazyLoad(index);
+       this.setShouldUseLazyLoad(index, shouldUseLazyLoad);
+     });
+   }
+ 
+-  onContainerScroll = (event) => {
+-    const selectedIndex = Math.round(event.nativeEvent.contentOffset.x / this.props.componentWidth);
+-    const isIndexInBounds = selectedIndex >= 0 && selectedIndex <= this.props.children.length;
++  onContainerScroll = event => {
++    const selectedIndex = Math.round(
++      event.nativeEvent.contentOffset.x / this.props.componentWidth
++    );
++    const isIndexInBounds =
++      selectedIndex >= 0 && selectedIndex <= this.props.children.length;
+     if (isIndexInBounds && selectedIndex !== this.props.selectedIndex) {
+       this.onItemChange(selectedIndex);
+     }
+   };
+ 
+-  onItemChange = (index) => {
++  onItemChange = index => {
+     if (this.scrollRequestIndex === undefined) {
+       this.props.onSelect(index);
+     } else if (index === this.scrollRequestIndex) {
+@@ -99,7 +101,7 @@ export class RkTabPager extends React.Component {
+     this.containerRef.scrollToIndex(params);
+   }
+ 
+-  setContainerRef = (ref) => {
++  setContainerRef = ref => {
+     this.containerRef = ref;
+   };
+ 
+@@ -108,7 +110,7 @@ export class RkTabPager extends React.Component {
+   getItemLayout = (item, index) => ({
+     length: this.props.componentWidth,
+     offset: this.props.componentWidth * index,
+-    index,
++    index
+   });
+ 
+   shouldUseLazyLoad(index) {
